@@ -1,0 +1,57 @@
+{
+  "member_model": "LightGBM",
+  "random_state": 42,
+  "features": "X_*_tree.npz (tree preprocessing)",
+  "best_params": {
+    "reg_lambda": 1.0,
+    "num_leaves": 127,
+    "min_child_samples": 10,
+    "learning_rate": 0.03,
+    "colsample_bytree": 0.5
+  },
+  "n_trees": 500,
+  "test_with_code_columns": {
+    "accuracy": 0.8223,
+    "macro_f1": 0.7715,
+    "class1_recall": 0.8738
+  },
+  "test_without_code_columns": null,
+  "xgboost_test_with_code_columns": {
+    "accuracy": 0.8057,
+    "macro_f1": 0.7509,
+    "class1_recall": 0.8712
+  },
+  "per_class_test_with_code_columns": {
+    "CLASS - 1": {
+      "precision": 0.7840390533800276,
+      "recall": 0.8738024837374335,
+      "f1-score": 0.8264906589103926,
+      "support": 8455.0
+    },
+    "CLASS - 2": {
+      "precision": 0.879857960149931,
+      "recall": 0.7906399574543521,
+      "f1-score": 0.8328664799253035,
+      "support": 11282.0
+    },
+    "CLASS - 3": {
+      "precision": 0.5971802618328298,
+      "recall": 0.7258261933904528,
+      "f1-score": 0.6552486187845303,
+      "support": 817.0
+    },
+    "accuracy": 0.8222730368784664,
+    "macro avg": {
+      "precision": 0.7536924251209295,
+      "recall": 0.7967562115274127,
+      "f1-score": 0.7715352525400755,
+      "support": 20554.0
+    },
+    "weighted avg": {
+      "precision": 0.829206187440745,
+      "recall": 0.8222730368784664,
+      "f1-score": 0.8231836269899583,
+      "support": 20554.0
+    }
+  }
+}
