@@ -1,0 +1,6 @@
+,Accuracy,Macro-F1,Class 1 recall,Class 2 recall,Class 3 recall,Class 1 precision
+LightGBM (tuned),0.822273,0.771535,0.873802,0.79064,0.725826,0.784039
+Random Forest (balanced),0.816483,0.769442,0.877942,0.780624,0.675643,0.76668
+Linear SVM,0.82,0.76,0.85,0.81,0.68,0.8
+XGBoost,0.8057,0.7509,0.8712,0.759,0.775,0.767
+Logistic Regression (tuned),0.587866,0.532298,0.905973,0.360752,0.432069,0.5157

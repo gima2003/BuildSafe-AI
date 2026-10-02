@@ -1,0 +1,24 @@
+{
+  "final_model": "LightGBM (tuned)",
+  "model_file": "models/lightgbm_model.joblib",
+  "label_map": "models/lightgbm_label_map.joblib",
+  "preprocessing_pipeline": "artifacts/preprocess_tree.joblib",
+  "history_lookup": "artifacts/bin_history_lookup.csv",
+  "best_params": {
+    "reg_lambda": 1.0,
+    "num_leaves": 127,
+    "min_child_samples": 10,
+    "learning_rate": 0.03,
+    "colsample_bytree": 0.5
+  },
+  "n_trees": 500,
+  "test_metrics": {
+    "Accuracy": 0.8223,
+    "Macro-F1": 0.7715,
+    "Class 1 recall": 0.8738,
+    "Class 2 recall": 0.7906,
+    "Class 3 recall": 0.7258,
+    "Class 1 precision": 0.784
+  },
+  "selection_rule": "lowest average rank on Macro-F1, Accuracy, Class 1 recall, Class 3 recall"
+}

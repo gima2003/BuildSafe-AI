@@ -1,0 +1,6 @@
+,Macro-F1,Accuracy,Class 1 recall,Class 3 recall,Average rank
+LightGBM (tuned),1,1,3,2,1.75
+Random Forest (balanced),2,3,2,4,2.75
+Linear SVM,3,2,5,3,3.25
+XGBoost,4,4,4,1,3.25
+Logistic Regression (tuned),5,5,1,5,4.0
