@@ -11,14 +11,14 @@
     "learning_rate": 0.03,
     "colsample_bytree": 0.5
   },
-  "n_trees": 500,
+  "n_trees": 376,
   "test_metrics": {
-    "Accuracy": 0.8223,
-    "Macro-F1": 0.7715,
-    "Class 1 recall": 0.8738,
-    "Class 2 recall": 0.7906,
-    "Class 3 recall": 0.7258,
-    "Class 1 precision": 0.784
+    "Accuracy": 0.8194,
+    "Macro-F1": 0.768,
+    "Class 1 recall": 0.8788,
+    "Class 2 recall": 0.7796,
+    "Class 3 recall": 0.754,
+    "Class 1 precision": 0.7794
   },
   "selection_rule": "lowest average rank on Macro-F1, Accuracy, Class 1 recall, Class 3 recall"
 }
