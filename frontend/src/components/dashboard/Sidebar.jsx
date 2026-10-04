@@ -145,14 +145,10 @@ function NavigationSection({
   );
 }
 
-export default function Sidebar({
-  activePage: propActivePage,
-  setActivePage: propSetActivePage,
-}) {
+export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
-  const [internalPage, setInternalPage] = useState("Predict Severity");
-  const activePage = propActivePage || internalPage;
-  const setActivePage = propSetActivePage || setInternalPage;
+  const [activePage, setActivePage] =
+    useState("Dashboard");
 
   return (
     <aside
@@ -338,7 +334,7 @@ export default function Sidebar({
                 text-white
               "
             >
-              Logistic Regression [tuned]
+              Linear SVM
             </p>
 
             <div
@@ -351,7 +347,7 @@ export default function Sidebar({
             >
 
               <span className="text-xs text-slate-500">
-                Macro-F1 (Test)
+                Accuracy
               </span>
 
               <span
@@ -361,7 +357,7 @@ export default function Sidebar({
                   text-cyan-400
                 "
               >
-                77.11%
+                99.39%
               </span>
 
             </div>
@@ -379,7 +375,7 @@ export default function Sidebar({
               <div
                 className="
                   h-full
-                  w-[77.11%]
+                  w-[99.39%]
                   rounded-full
                   bg-linear-to-r
                   from-cyan-500

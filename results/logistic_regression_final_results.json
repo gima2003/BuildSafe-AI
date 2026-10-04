@@ -1,0 +1,43 @@
+{
+  "model": {
+    "name": "Logistic Regression",
+    "solver": "saga",
+    "penalty": "L1",
+    "regularization": "Lasso",
+    "C": 0.01,
+    "class_weights": "balanced"
+  },
+  "test_set_performance": {
+    "accuracy": 0.5878661087866108,
+    "macro_f1": 0.5322976775044572,
+    "weighted_f1": 0.5638254427707157,
+    "roc_auc_macro_ovr": 0.7739820652593666,
+    "cohens_kappa": 0.2773541408779737,
+    "log_loss": 0.8228952199161641
+  },
+  "per_class_recall": {
+    "class_1_hazardous": 0.905972797161443,
+    "class_2_major": 0.3607516397801808,
+    "class_3_lesser": 0.4320685434516524
+  },
+  "model_properties": {
+    "non_zero_features": 3232,
+    "total_features": 20554,
+    "non_zero_feature_percentage": 15.72,
+    "training_time_seconds": 232.95,
+    "sparsity_percentage": 84.28
+  },
+  "key_observations": [
+    "Text features (TF-IDF) dominate \u2014 as EDA predicted",
+    "Strong L1 regularization zeroed out approximately 90% of features",
+    "No leakage terms in top features (verified)",
+    "Model is well-calibrated (high confidence corresponds to high accuracy)",
+    "Time-aware validation prevented temporal leakage"
+  ],
+  "recommendations": [
+    "Deploy as first-line triage assistant",
+    "Use prediction confidence to flag uncertain cases",
+    "Monitor for distribution drift and retrain quarterly",
+    "Benchmark against XGBoost and LightGBM in the next phase"
+  ]
+}

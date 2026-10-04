@@ -1,6 +1,0 @@
-Candidate,CV macro-F1,std,CV C1 recall,CV C1 precision,CV C3 recall,C1 >= 0.80,C3 >= 0.55,has probabilities,eligible
-Linear SVM [tuned],0.77682,0.00723,0.8316,0.8206,0.67186,True,True,False,False
-LightGBM [tuned+k/alpha],0.77475,0.00368,0.84219,0.81415,0.64978,True,True,True,True
-Random Forest [tuned],0.77273,0.00519,0.82314,0.81578,0.60236,True,True,True,True
-Logistic Regression [tuned],0.77192,0.00471,0.84082,0.81384,0.72997,True,True,True,True
-XGBoost [tuned+k/alpha],0.76544,0.00343,0.84946,0.79643,0.70602,True,True,True,True
