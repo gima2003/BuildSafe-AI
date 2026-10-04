@@ -1,0 +1,528 @@
+{
+  "project": "BuildSafe-AI - NYC DOB/ECB violation severity triage",
+  "created": "2026-10-04T14:22:41",
+  "quick_run": false,
+  "final_model": {
+    "name": "Logistic Regression [tuned]",
+    "family": "Logistic Regression",
+    "parameters": {
+      "C": 0.943697680900179,
+      "max_iter": 300,
+      "alpha": 0.5
+    },
+    "chi2_k": null,
+    "class_weight_alpha": 0.5,
+    "training_rows": 81780,
+    "training_period": [
+      "2025-01-01",
+      "2026-05-12"
+    ],
+    "fit_seconds": 12.7
+  },
+  "files": {
+    "pipeline": "models/buildsafe_final_pipeline.joblib",
+    "pipeline_steps": [
+      "preprocess (ColumnTransformer + chi2 SelectKBest, fitted on the training period)",
+      "model"
+    ],
+    "source_preprocessing": "artifacts/preprocess_linear.joblib (features step) - from Notebook 02",
+    "building_history_lookup": "artifacts/bin_history_lookup.csv"
+  },
+  "classes": {
+    "order": [
+      "CLASS - 1",
+      "CLASS - 2",
+      "CLASS - 3"
+    ],
+    "meaning": {
+      "CLASS - 1": "Immediately hazardous",
+      "CLASS - 2": "Major",
+      "CLASS - 3": "Lesser"
+    },
+    "note": "predict_proba columns follow this order (model class ids 0,1,2)"
+  },
+  "input_schema": {
+    "columns_in_order": [
+      "DESC_CLEAN",
+      "BORO",
+      "VIOLATION_TYPE",
+      "RESPONDENT_TYPE",
+      "DOB_UNIT",
+      "ISSUE_MONTH",
+      "ISSUE_DAYOFWEEK",
+      "IS_WEEKEND",
+      "HAS_DOB_VIOLATION",
+      "AGGRAVATED_ORD",
+      "BIN_PRIOR_VIOLATIONS",
+      "BIN_PRIOR_CLASS1",
+      "BIN_DAYS_SINCE_PREV",
+      "DESC_WORDS"
+    ],
+    "text_column": "DESC_CLEAN",
+    "categorical_columns_cast_to_str": [
+      "BORO",
+      "VIOLATION_TYPE",
+      "RESPONDENT_TYPE",
+      "DOB_UNIT",
+      "ISSUE_MONTH",
+      "ISSUE_DAYOFWEEK"
+    ],
+    "allowed_categories_seen_in_training": {
+      "BORO": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "VIOLATION_TYPE": [
+        "Boilers",
+        "Construction",
+        "Cranes and Derricks",
+        "Elevators",
+        "Local Law",
+        "Plumbing",
+        "Public Assembly",
+        "Quality of Life",
+        "Signs",
+        "Site Safety",
+        "Unknown",
+        "Zoning"
+      ],
+      "RESPONDENT_TYPE": [
+        "GOVERNMENT",
+        "INDIVIDUAL",
+        "ORGANISATION",
+        "UNKNOWN"
+      ],
+      "DOB_UNIT": [
+        "AERT",
+        "AHRT",
+        "AHVG",
+        "AHVJ",
+        "AMTF",
+        "ARZ",
+        "ARZG",
+        "ASPO",
+        "BDOE",
+        "BL",
+        "C",
+        "CADG",
+        "CAHG",
+        "CAHJ",
+        "CAHL",
+        "CAHV",
+        "CCER",
+        "CCFA",
+        "CDCW",
+        "CDOB",
+        "CDOE",
+        "CE",
+        "CEB",
+        "CER",
+        "CERA",
+        "CERC",
+        "CERD",
+        "CERE",
+        "CERG",
+        "CERJ",
+        "CERK",
+        "CERM",
+        "CERP",
+        "CERR",
+        "CERS",
+        "CERT",
+        "CERW",
+        "CET",
+        "CEU",
+        "CEUH",
+        "CGF",
+        "CMFE",
+        "CMTF",
+        "CN",
+        "CNED",
+        "CNEE",
+        "CNEF",
+        "CNEK",
+        "CNEW",
+        "CNRT",
+        "CODE",
+        "CODI",
+        "CON",
+        "CONS",
+        "COSI",
+        "COSP",
+        "CQND",
+        "CR",
+        "CRDV",
+        "CRGJ",
+        "CRRC",
+        "CRRR",
+        "CRSJ",
+        "CRT",
+        "CRTA",
+        "CRTB",
+        "CRTC",
+        "CRTD",
+        "CRTE",
+        "CRTG",
+        "CRTH",
+        "CRTJ",
+        "CRTM",
+        "CRTS",
+        "CRTT",
+        "CRTV",
+        "CRTW",
+        "CSIS",
+        "CSIU",
+        "CSOP",
+        "CSPA",
+        "CSPC",
+        "CSPD",
+        "CSPE",
+        "CSPF",
+        "CSPM",
+        "CSPO",
+        "CSPS",
+        "CSPT",
+        "CSYA",
+        "CTH",
+        "CUPK",
+        "DLEL",
+        "E",
+        "ECB",
+        "ELEL",
+        "ELRT",
+        "EW",
+        "FA",
+        "FAFA",
+        "FALL",
+        "FEU",
+        "HPD",
+        "LIRG",
+        "LL",
+        "LLCE",
+        "LLCM",
+        "LLFA",
+        "LLFJ",
+        "LLPS",
+        "LLRS",
+        "LLRW",
+        "NONE",
+        "OATH",
+        "P",
+        "PAER",
+        "PI",
+        "PISB",
+        "PL",
+        "PLER",
+        "PS",
+        "PSJL",
+        "PSLL",
+        "QRZG",
+        "R",
+        "RT",
+        "RW",
+        "SGM",
+        "SGSP",
+        "SPO",
+        "SPOS",
+        "SR",
+        "SRFA",
+        "SUE",
+        "Z",
+        "ZERE",
+        "ZERJ",
+        "ZJMJ",
+        "ZMTF",
+        "ZNEE"
+      ],
+      "ISSUE_MONTH": [
+        "1",
+        "10",
+        "11",
+        "12",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "ISSUE_DAYOFWEEK": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    "binary_columns": [
+      "IS_WEEKEND",
+      "HAS_DOB_VIOLATION"
+    ],
+    "numeric_columns": [
+      "AGGRAVATED_ORD",
+      "BIN_PRIOR_VIOLATIONS",
+      "BIN_PRIOR_CLASS1",
+      "BIN_DAYS_SINCE_PREV",
+      "DESC_WORDS"
+    ],
+    "training_ranges": {
+      "AGGRAVATED_ORD": [
+        0.0,
+        2.0
+      ],
+      "BIN_PRIOR_VIOLATIONS": [
+        0.0,
+        47.0
+      ],
+      "BIN_PRIOR_CLASS1": [
+        0.0,
+        23.0
+      ],
+      "BIN_DAYS_SINCE_PREV": [
+        1.0,
+        1000.0
+      ],
+      "DESC_WORDS": [
+        0.0,
+        47.0
+      ],
+      "IS_WEEKEND": [
+        0.0,
+        1.0
+      ],
+      "HAS_DOB_VIOLATION": [
+        0.0,
+        1.0
+      ]
+    },
+    "notes": [
+      "Categorical columns MUST be strings ('1', not 1) - the encoder was fitted on strings.",
+      "Empty/missing description -> empty string.",
+      "Unseen categories are mapped to an 'infrequent' bucket and numeric values are clipped to the training range (no crash).",
+      "Raw-to-model-input feature engineering (clean_description, respondent_type, DOB unit, date parts, BIN history) is defined in Notebook 02 and must be re-used by the backend."
+    ]
+  },
+  "human_review": {
+    "confidence_threshold": 0.65,
+    "rule": "if max class probability < threshold, flag for human review",
+    "chosen_on": "out-of-fold validation scores (not the test set)"
+  },
+  "selection": {
+    "rule": {
+      "eligibility": "CV Class-1 recall >= 0.8, CV Class-3 recall >= 0.55, outputs probabilities",
+      "ranking": "highest CV macro-F1",
+      "tie_break": "within 0.005: higher Class-1 recall, then faster prediction"
+    },
+    "decision_trail": [
+      "Step 1 (eligibility): 4 of 5 candidates pass the guard-rails: ['LightGBM [tuned+k/alpha]', 'Random Forest [tuned]', 'Logistic Regression [tuned]', 'XGBoost [tuned+k/alpha]']",
+      "Step 2 (ranking): highest CV macro-F1 = LightGBM [tuned+k/alpha] (0.7748)",
+      "Step 3 (tie-break): within 0.005 macro-F1 of the top: ['LightGBM [tuned+k/alpha]', 'Random Forest [tuned]', 'Logistic Regression [tuned]']; highest Class-1 recall = LightGBM [tuned+k/alpha] (0.8422)",
+      "          still tied on recall -> faster predictor: Logistic Regression [tuned] (0 ms / 1000 rows)"
+    ],
+    "candidates": [
+      {
+        "Candidate": "Linear SVM [tuned]",
+        "CV macro-F1": 0.7768,
+        "std": 0.0072,
+        "CV C1 recall": 0.8316,
+        "CV C1 precision": 0.8206,
+        "CV C3 recall": 0.6719,
+        "C1 >= 0.80": true,
+        "C3 >= 0.55": true,
+        "has probabilities": false,
+        "eligible": false
+      },
+      {
+        "Candidate": "LightGBM [tuned+k/alpha]",
+        "CV macro-F1": 0.7748,
+        "std": 0.0037,
+        "CV C1 recall": 0.8422,
+        "CV C1 precision": 0.8142,
+        "CV C3 recall": 0.6498,
+        "C1 >= 0.80": true,
+        "C3 >= 0.55": true,
+        "has probabilities": true,
+        "eligible": true
+      },
+      {
+        "Candidate": "Random Forest [tuned]",
+        "CV macro-F1": 0.7727,
+        "std": 0.0052,
+        "CV C1 recall": 0.8231,
+        "CV C1 precision": 0.8158,
+        "CV C3 recall": 0.6024,
+        "C1 >= 0.80": true,
+        "C3 >= 0.55": true,
+        "has probabilities": true,
+        "eligible": true
+      },
+      {
+        "Candidate": "Logistic Regression [tuned]",
+        "CV macro-F1": 0.7719,
+        "std": 0.0047,
+        "CV C1 recall": 0.8408,
+        "CV C1 precision": 0.8138,
+        "CV C3 recall": 0.73,
+        "C1 >= 0.80": true,
+        "C3 >= 0.55": true,
+        "has probabilities": true,
+        "eligible": true
+      },
+      {
+        "Candidate": "XGBoost [tuned+k/alpha]",
+        "CV macro-F1": 0.7654,
+        "std": 0.0034,
+        "CV C1 recall": 0.8495,
+        "CV C1 precision": 0.7964,
+        "CV C3 recall": 0.706,
+        "C1 >= 0.80": true,
+        "C3 >= 0.55": true,
+        "has probabilities": true,
+        "eligible": true
+      }
+    ]
+  },
+  "metrics": {
+    "cv_macro_f1": [
+      0.7719167101232735,
+      0.004707387916835491
+    ],
+    "cv_class1_recall": 0.8408153893209819,
+    "test": {
+      "macro_f1": 0.7711356922786279,
+      "accuracy": 0.8223216892089131,
+      "balanced_accuracy": 0.7934580170428943,
+      "c1_recall": 0.8611472501478415,
+      "c1_precision": 0.791327029670688,
+      "c1_f1": 0.8247621205256004,
+      "c2_f1": 0.8342413888632376,
+      "c3_recall": 0.7184822521419829,
+      "c3_precision": 0.6008188331627431,
+      "c3_f1": 0.6544035674470458,
+      "c1_as_c3": 0.002483737433471319,
+      "macro_auc_ovr": 0.9422513890517923
+    },
+    "test_95_ci": {
+      "macro_f1": [
+        0.7608712842744052,
+        0.7807465021084616
+      ],
+      "c1_recall": [
+        0.8545265965183766,
+        0.8673852490900502
+      ],
+      "c3_recall": [
+        0.6907702662540864,
+        0.7503679448506742
+      ]
+    },
+    "test_period": [
+      "2026-05-13",
+      "2026-09-10"
+    ]
+  },
+  "top_features": [
+    [
+      "text__AND REPLACE",
+      0.0008694716846515234
+    ],
+    [
+      "text__OBTAIN PERMIT",
+      0.0007643347977206052
+    ],
+    [
+      "text__OR REPLACE",
+      0.0007516363309515441
+    ],
+    [
+      "text__OBTAIN ALL",
+      0.0007108029951122968
+    ],
+    [
+      "text__AND OR",
+      0.0005809913542455797
+    ],
+    [
+      "text__ALL PERMITS",
+      0.0005799419413948151
+    ],
+    [
+      "text__FENCE",
+      0.0004474059576835872
+    ],
+    [
+      "text__CEASE",
+      0.00042223750189271896
+    ],
+    [
+      "text__PERMIT OR",
+      0.000391658727505145
+    ],
+    [
+      "text__FILE CERTIFICATE",
+      0.00037428683307063725
+    ],
+    [
+      "text__HEIGHT",
+      0.0003729578109645124
+    ],
+    [
+      "text__PERMIT VIOLATION",
+      0.0003668943359073939
+    ],
+    [
+      "text__OR RESTORE",
+      0.00034832380032835875
+    ],
+    [
+      "text__CEASE USE",
+      0.00034582754814452884
+    ],
+    [
+      "text__SIGN",
+      0.0003245715840294714
+    ],
+    [
+      "text__ORDER",
+      0.00031645352119396685
+    ],
+    [
+      "cat__VIOLATION_TYPE_Site Safety",
+      0.0003129910563433897
+    ],
+    [
+      "text__CURB",
+      0.00031048680533708305
+    ],
+    [
+      "cat__VIOLATION_TYPE_Zoning",
+      0.0003081933569517793
+    ],
+    [
+      "text__WITH COMMISSIONER",
+      0.0003075358089385612
+    ]
+  ],
+  "limitations": [
+    "Triage aid - uncertain cases need a human inspector.",
+    "Trained on one city's data; wording/enforcement drift over time -> retrain periodically (see monthly drift check).",
+    "Class 3 (rare) is the hardest class.",
+    "Building-history features use violations only up to the end of the training data."
+  ],
+  "versions": {
+    "python": "3.13.7",
+    "scikit-learn": "1.9.1",
+    "numpy": "2.5.2",
+    "pandas": "3.0.5",
+    "lightgbm": "4.7.0",
+    "xgboost": "3.4.1",
+    "joblib": "1.6.0"
+  }
+}
