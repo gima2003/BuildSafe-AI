@@ -13,8 +13,10 @@ import {
   Trash2,
 } from "lucide-react";
 import { predictCsv, predictBatch } from "../services/api";
+import { useTheme } from "../context/ThemeContext";
 
 export default function BatchPrediction() {
+  const { isDark } = useTheme();
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -164,18 +166,20 @@ export default function BatchPrediction() {
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/6 pb-6">
+      <div className={`flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-6 ${
+        isDark ? "border-white/8" : "border-[#D9DEE5]"
+      }`}>
         <div>
           <div className="flex items-center gap-2.5">
-            <span className="flex h-2.5 w-2.5 rounded-full bg-blue-400" />
-            <span className="text-xs font-semibold tracking-wider text-blue-400 uppercase">
+            <span className="flex h-2.5 w-2.5 rounded-full bg-blue-500" />
+            <span className="text-xs font-bold tracking-wider text-blue-600 dark:text-blue-400 uppercase">
               High-Throughput Processing
             </span>
           </div>
-          <h1 className="mt-1 text-2xl md:text-3xl font-bold tracking-tight text-white">
+          <h1 className={`mt-1.5 text-2xl md:text-3xl font-extrabold tracking-tight ${isDark ? "text-white" : "text-[#1F2937]"}`}>
             Batch Violation Triage
           </h1>
-          <p className="mt-1 text-sm text-slate-400">
+          <p className={`mt-1.5 text-base ${isDark ? "text-slate-300" : "text-[#5B6472]"}`}>
             Upload CSV datasets or batch portfolios for automated multi-record severity classification and human review auditing.
           </p>
         </div>
@@ -184,28 +188,34 @@ export default function BatchPrediction() {
           type="button"
           onClick={loadDemoBatch}
           disabled={loading}
-          className="px-4 py-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-xs font-medium text-white transition-all flex items-center gap-2 cursor-pointer"
+          className={`px-5 py-3 rounded-xl border text-sm font-bold transition-all flex items-center gap-2 cursor-pointer ${
+            isDark ? "border-white/10 bg-white/5 hover:bg-white/10 text-white" : "border-[#D9DEE5] bg-white hover:bg-[#EEF0F3] text-[#1F2937] shadow-xs"
+          }`}
         >
-          <FileSpreadsheet size={15} className="text-cyan-400" />
+          <FileSpreadsheet size={16} className="text-cyan-600 dark:text-cyan-400" />
           Load Demo 5-Case Batch
         </button>
       </div>
 
       {/* Upload Zone */}
-      <div className="rounded-2xl border border-dashed border-white/12 bg-[#111827]/40 p-8 text-center backdrop-blur-md">
+      <div className={`rounded-2xl border border-dashed p-9 text-center backdrop-blur-md ${
+        isDark ? "border-white/12 bg-[#111827]/40 text-white" : "border-[#D9DEE5] bg-white text-[#1F2937] shadow-xs"
+      }`}>
         <div className="max-w-md mx-auto space-y-4">
-          <div className="h-14 w-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 mx-auto flex items-center justify-center text-cyan-400">
-            <Upload size={26} />
+          <div className="h-14 w-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/25 mx-auto flex items-center justify-center text-cyan-600 dark:text-cyan-400">
+            <Upload size={28} />
           </div>
           <div>
-            <h3 className="text-base font-bold text-white">Upload Violations CSV File</h3>
-            <p className="mt-1 text-xs text-slate-400">
-              CSV file containing columns: <code className="text-cyan-300">description</code>, <code className="text-cyan-300">borough</code>, <code className="text-cyan-300">violation_type</code>, <code className="text-cyan-300">respondent</code>, <code className="text-cyan-300">issue_date</code>, <code className="text-cyan-300">bin</code>.
+            <h3 className={`text-lg font-bold ${isDark ? "text-white" : "text-[#1F2937]"}`}>Upload Violations CSV File</h3>
+            <p className={`mt-1.5 text-sm leading-relaxed ${isDark ? "text-slate-400" : "text-[#5B6472]"}`}>
+              CSV file containing columns: <code className="text-cyan-700 dark:text-cyan-300 font-mono font-semibold">description</code>, <code className="text-cyan-700 dark:text-cyan-300 font-mono font-semibold">borough</code>, <code className="text-cyan-700 dark:text-cyan-300 font-mono font-semibold">violation_type</code>, <code className="text-cyan-700 dark:text-cyan-300 font-mono font-semibold">respondent</code>, <code className="text-cyan-700 dark:text-cyan-300 font-mono font-semibold">issue_date</code>, <code className="text-cyan-700 dark:text-cyan-300 font-mono font-semibold">bin</code>.
             </p>
           </div>
 
-          <div className="flex items-center justify-center gap-3">
-            <label className="cursor-pointer px-4 py-2.5 rounded-xl bg-white/8 hover:bg-white/12 text-xs font-semibold text-white border border-white/10 transition-colors">
+          <div className="flex items-center justify-center gap-3.5 pt-1">
+            <label className={`cursor-pointer px-5 py-3 rounded-xl text-sm font-bold border transition-colors ${
+              isDark ? "bg-white/10 hover:bg-white/15 text-white border-white/12" : "bg-[#EEF0F3] hover:bg-[#E2E6EA] text-[#1F2937] border-[#D9DEE5]"
+            }`}>
               <span>{file ? file.name : "Select CSV File"}</span>
               <input type="file" accept=".csv" onChange={handleFileChange} className="hidden" />
             </label>
@@ -215,17 +225,17 @@ export default function BatchPrediction() {
                 type="button"
                 onClick={handleUpload}
                 disabled={loading}
-                className="px-5 py-2.5 rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-xs font-bold text-white transition-all shadow-md shadow-cyan-500/20 flex items-center gap-1.5 cursor-pointer"
+                className="px-6 py-3 rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-sm font-bold text-white transition-all shadow-md shadow-cyan-500/25 flex items-center gap-2 cursor-pointer"
               >
-                {loading && <Loader2 size={14} className="animate-spin" />}
+                {loading && <Loader2 size={16} className="animate-spin" />}
                 Run Batch Triage
               </button>
             )}
           </div>
 
           {error && (
-            <div className="p-3 rounded-xl border border-red-500/30 bg-red-500/10 text-red-300 text-xs flex items-center justify-center gap-2">
-              <AlertTriangle size={15} />
+            <div className="p-4 rounded-xl border border-red-500/40 bg-red-500/10 text-red-600 dark:text-red-300 text-sm font-medium flex items-center justify-center gap-2.5">
+              <AlertTriangle size={17} />
               <span>{error}</span>
             </div>
           )}
@@ -237,36 +247,36 @@ export default function BatchPrediction() {
         <div className="space-y-6">
           {/* Summary KPI Bar */}
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-            <div className="p-4 rounded-xl border border-white/8 bg-[#111827]/70">
-              <p className="text-[11px] text-slate-400 font-medium">Total Processed</p>
-              <p className="text-2xl font-bold text-white mt-1">{results.total_records}</p>
+            <div className={`p-5 rounded-2xl border ${isDark ? "border-white/10 bg-[#111827]/70" : "border-[#D9DEE5] bg-white shadow-xs"}`}>
+              <p className={`text-xs font-bold uppercase tracking-wider ${isDark ? "text-slate-400" : "text-[#5B6472]"}`}>Total Processed</p>
+              <p className={`text-3xl font-black mt-2 ${isDark ? "text-white" : "text-[#1F2937]"}`}>{results.total_records}</p>
             </div>
-            <div className="p-4 rounded-xl border border-red-500/20 bg-red-500/5">
-              <p className="text-[11px] text-red-300 font-medium">Class 1 (Hazardous)</p>
-              <p className="text-2xl font-bold text-red-400 mt-1">
+            <div className={`p-5 rounded-2xl border ${isDark ? "border-red-500/25 bg-red-500/10 text-red-300" : "border-red-200 bg-red-50 text-red-900"}`}>
+              <p className="text-xs font-bold uppercase tracking-wider">Class 1 (Hazardous)</p>
+              <p className="text-3xl font-black mt-2 text-red-600 dark:text-red-400">
                 {results.predictions.filter((p) => p.predicted_class === "CLASS - 1").length}
               </p>
             </div>
-            <div className="p-4 rounded-xl border border-blue-500/20 bg-blue-500/5">
-              <p className="text-[11px] text-blue-300 font-medium">Class 2 (Major)</p>
-              <p className="text-2xl font-bold text-blue-400 mt-1">
+            <div className={`p-5 rounded-2xl border ${isDark ? "border-blue-500/25 bg-blue-500/10 text-blue-300" : "border-blue-200 bg-blue-50 text-blue-900"}`}>
+              <p className="text-xs font-bold uppercase tracking-wider">Class 2 (Major)</p>
+              <p className="text-3xl font-black mt-2 text-blue-600 dark:text-blue-400">
                 {results.predictions.filter((p) => p.predicted_class === "CLASS - 2").length}
               </p>
             </div>
-            <div className="p-4 rounded-xl border border-amber-500/20 bg-amber-500/5">
-              <p className="text-[11px] text-amber-300 font-medium">Flagged for Human Inspector</p>
-              <p className="text-2xl font-bold text-amber-400 mt-1">
+            <div className={`p-5 rounded-2xl border ${isDark ? "border-amber-500/25 bg-amber-500/10 text-amber-300" : "border-amber-300 bg-amber-50 text-amber-950"}`}>
+              <p className="text-xs font-bold uppercase tracking-wider">Flagged for Human Inspector</p>
+              <p className="text-3xl font-black mt-2 text-amber-600 dark:text-amber-400">
                 {results.flagged_for_review_count}
               </p>
             </div>
           </div>
 
           {/* Table Header / Filter Bar */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <Filter size={15} className="text-slate-500" />
-              <span className="text-xs text-slate-400 font-medium">Filter view:</span>
-              <div className="flex gap-1.5">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2.5">
+              <Filter size={16} className={isDark ? "text-slate-400" : "text-[#5B6472]"} />
+              <span className={`text-sm font-bold ${isDark ? "text-slate-200" : "text-[#1F2937]"}`}>Filter view:</span>
+              <div className="flex flex-wrap gap-1.5">
                 {[
                   { id: "all", label: `All (${results.total_records})` },
                   { id: "review", label: `⚠️ Human Review (${results.flagged_for_review_count})` },
@@ -278,10 +288,12 @@ export default function BatchPrediction() {
                     key={f.id}
                     type="button"
                     onClick={() => setFilter(f.id)}
-                    className={`px-3 py-1 rounded-lg text-xs font-medium transition-colors ${
+                    className={`px-3.5 py-1.5 rounded-lg text-xs md:text-sm font-bold transition-colors cursor-pointer ${
                       filter === f.id
-                        ? "bg-white/15 text-white"
-                        : "bg-white/3 text-slate-400 hover:text-white"
+                        ? "bg-cyan-600 text-white font-bold"
+                        : isDark
+                          ? "bg-white/6 text-slate-300 hover:text-white hover:bg-white/12"
+                          : "bg-[#EEF0F3] text-[#1F2937] hover:bg-[#E2E6EA] border border-[#D9DEE5]"
                     }`}
                   >
                     {f.label}
@@ -293,69 +305,79 @@ export default function BatchPrediction() {
             <button
               type="button"
               onClick={handleDownloadCsv}
-              className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-semibold text-cyan-400 border border-white/10 flex items-center gap-2 cursor-pointer transition-colors"
+              className={`px-4.5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 cursor-pointer transition-colors border ${
+                isDark
+                  ? "bg-white/6 hover:bg-white/12 text-cyan-400 border-white/10"
+                  : "bg-white hover:bg-[#EEF0F3] text-cyan-800 border-[#D9DEE5] shadow-xs"
+              }`}
             >
-              <Download size={14} />
+              <Download size={16} />
               Export Triage Report (CSV)
             </button>
           </div>
 
           {/* Table */}
-          <div className="rounded-2xl border border-white/8 bg-[#111827]/60 overflow-x-auto shadow-xl">
-            <table className="w-full text-left text-xs">
-              <thead className="border-b border-white/8 bg-white/2 text-slate-400 uppercase tracking-wider font-semibold text-[10px]">
+          <div className={`rounded-2xl border overflow-x-auto shadow-xl ${
+            isDark ? "border-white/10 bg-[#111827]/70" : "border-[#D9DEE5] bg-white shadow-xs"
+          }`}>
+            <table className="w-full text-left text-sm">
+              <thead className={`border-b uppercase tracking-wider font-bold text-xs ${
+                isDark ? "border-white/8 bg-white/3 text-slate-300" : "border-[#D9DEE5] bg-[#F8F9FA] text-[#1F2937]"
+              }`}>
                 <tr>
-                  <th className="py-3 px-4">#</th>
-                  <th className="py-3 px-4">Predicted Class</th>
-                  <th className="py-3 px-4">Confidence</th>
-                  <th className="py-3 px-4">Human Inspector Flag</th>
-                  <th className="py-3 px-4">Description</th>
-                  <th className="py-3 px-4">Borough</th>
-                  <th className="py-3 px-4">Type</th>
+                  <th className="py-4 px-4.5">#</th>
+                  <th className="py-4 px-4.5">Predicted Class</th>
+                  <th className="py-4 px-4.5">Confidence</th>
+                  <th className="py-4 px-4.5">Human Inspector Flag</th>
+                  <th className="py-4 px-4.5">Description</th>
+                  <th className="py-4 px-4.5">Borough</th>
+                  <th className="py-4 px-4.5">Type</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/6 text-slate-300">
+              <tbody className={`divide-y ${isDark ? "divide-white/6 text-slate-200" : "divide-[#D9DEE5] text-[#1F2937]"}`}>
                 {filteredPredictions?.map((item, idx) => {
                   const isC1 = item.predicted_class === "CLASS - 1";
                   const isC2 = item.predicted_class === "CLASS - 2";
                   return (
-                    <tr key={idx} className="hover:bg-white/2 transition-colors">
-                      <td className="py-3.5 px-4 font-mono text-slate-500">{idx + 1}</td>
-                      <td className="py-3.5 px-4 font-bold">
+                    <tr key={idx} className={isDark ? "hover:bg-white/3 transition-colors" : "hover:bg-[#F8F9FA] transition-colors"}>
+                      <td className={`py-4 px-4.5 font-mono ${isDark ? "text-slate-400" : "text-[#5B6472]"}`}>{idx + 1}</td>
+                      <td className="py-4 px-4.5 font-bold">
                         <span
-                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold border ${
+                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border ${
                             isC1
-                              ? "bg-red-500/10 text-red-300 border-red-500/30"
+                              ? isDark ? "bg-red-500/15 text-red-200 border-red-500/35" : "bg-red-100 text-red-900 border-red-300"
                               : isC2
-                              ? "bg-blue-500/10 text-blue-300 border-blue-500/30"
-                              : "bg-amber-500/10 text-amber-300 border-amber-500/30"
+                              ? isDark ? "bg-blue-500/15 text-blue-200 border-blue-500/35" : "bg-blue-100 text-blue-900 border-blue-300"
+                              : isDark ? "bg-amber-500/15 text-amber-200 border-amber-500/35" : "bg-amber-100 text-amber-900 border-amber-300"
                           }`}
                         >
-                          {isC1 ? <ShieldAlert size={12} /> : isC2 ? <ShieldCheck size={12} /> : <Info size={12} />}
+                          {isC1 ? <ShieldAlert size={14} /> : isC2 ? <ShieldCheck size={14} /> : <Info size={14} />}
                           {item.predicted_class}
                         </span>
                       </td>
-                      <td className="py-3.5 px-4 font-mono font-medium text-white">
+                      <td className={`py-4 px-4.5 font-mono font-bold ${isDark ? "text-white" : "text-[#1F2937]"}`}>
                         {(item.confidence * 100).toFixed(1)}%
                       </td>
-                      <td className="py-3.5 px-4">
+                      <td className="py-4 px-4.5">
                         {item.needs_human_review ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 animate-pulse">
-                            <AlertTriangle size={12} />
+                          <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border animate-pulse ${
+                            isDark ? "bg-amber-500/25 text-amber-200 border-amber-500/40" : "bg-amber-100 text-amber-900 border-amber-300"
+                          }`}>
+                            <AlertTriangle size={14} />
                             Send to Inspector
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 text-[11px] text-emerald-400">
-                            <CheckCircle2 size={13} />
+                          <span className="inline-flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-bold">
+                            <CheckCircle2 size={15} />
                             Automated OK
                           </span>
                         )}
                       </td>
-                      <td className="py-3.5 px-4 max-w-xs truncate text-slate-400" title={item.engineered_features?.DESC_CLEAN}>
+                      <td className={`py-4 px-4.5 max-w-xs truncate ${isDark ? "text-slate-300" : "text-[#5B6472]"}`} title={item.engineered_features?.DESC_CLEAN}>
                         {item.engineered_features?.DESC_CLEAN || "—"}
                       </td>
-                      <td className="py-3.5 px-4">{item.engineered_features?.BORO || "—"}</td>
-                      <td className="py-3.5 px-4">{item.engineered_features?.VIOLATION_TYPE || "—"}</td>
+                      <td className="py-4 px-4.5 font-medium">{item.engineered_features?.BORO || "—"}</td>
+                      <td className="py-4 px-4.5 font-medium">{item.engineered_features?.VIOLATION_TYPE || "—"}</td>
                     </tr>
                   );
                 })}

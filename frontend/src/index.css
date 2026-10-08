@@ -1,14 +1,32 @@
 @import "tailwindcss";
 
+:root {
+  --bg-main: #F5F6F8;
+  --surface-card: #FFFFFF;
+  --surface-secondary: #EEF0F3;
+  --text-primary: #1F2937;
+  --text-secondary: #5B6472;
+  --border-subtle: #D9DEE5;
+}
+
+html.dark {
+  --bg-main: #080D18;
+  --surface-card: #111827;
+  --surface-secondary: #1F293D;
+  --text-primary: #F9FAFB;
+  --text-secondary: #94A3B8;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+}
+
 html,
 body,
 #root {
   min-height: 100%;
   margin: 0;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 body {
-  background: #080d18;
   font-family:
     Inter,
     ui-sans-serif,
@@ -17,8 +35,52 @@ body {
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* Light Mode Overrides */
+html.light {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #080d18;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+html.light ::-webkit-scrollbar-track {
+  background: #eef0f3;
+}
+
+html.light ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }

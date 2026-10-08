@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BuildSafe-AI · System Testing & Input Guide (IT3051)</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --danger: #dc2626;
+      --warning: #d97706;
+      --success: #16a34a;
+      --bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --card-bg: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text);
+      background-color: var(--bg);
+      line-height: 1.6;
+      padding: 40px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    @media print {
+      body {
+        padding: 20px;
+        max-width: 100%;
+        color: #000;
+        background: #fff;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .page-break {
+        page-break-before: always;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      .card {
+        break-inside: avoid;
+      }
+    }
+
+    /* Print action bar */
+    .print-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0f172a;
+      color: #fff;
+      padding: 16px 24px;
+      border-radius: 12px;
+      margin-bottom: 32px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .print-btn {
+      background: #0284c7;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+
+    .print-btn:hover {
+      background: #0369a1;
+    }
+
+    header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    .badge-primary { background: #e0f2fe; color: #0369a1; }
+    .badge-danger { background: #fee2e2; color: #991b1b; }
+    .badge-warning { background: #fef3c7; color: #92400e; }
+    .badge-success { background: #dcfce7; color: #166534; }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      color: #0f172a;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 36px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      color: #1e293b;
+    }
+
+    p, li {
+      font-size: 14px;
+      color: #334155;
+      margin-bottom: 10px;
+    }
+
+    ul, ol {
+      margin-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .card-c1 {
+      border-left: 4px solid var(--danger);
+      background: #fef2f2;
+    }
+
+    .card-c2 {
+      border-left: 4px solid var(--primary);
+      background: #f0f9ff;
+    }
+
+    .card-c3 {
+      border-left: 4px solid var(--warning);
+      background: #fffbeb;
+    }
+
+    .card-flag {
+      border-left: 4px solid #f59e0b;
+      background: #fffbeb;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 16px 0;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    th {
+      background: #f1f5f9;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    code, .code-inline {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background: #e2e8f0;
+      color: #0f172a;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .code-block {
+      font-family: 'JetBrains Mono', monospace;
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 12px;
+      overflow-x: auto;
+      margin: 12px 0;
+      line-height: 1.5;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 8px 16px;
+      font-size: 13px;
+      margin: 12px 0;
+      background: #fff;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .field-name {
+      font-weight: 600;
+      color: #475569;
+    }
+
+    .field-val {
+      color: #0f172a;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      word-break: break-word;
+    }
+
+    .highlight-box {
+      border: 1px dashed var(--primary);
+      background: #f0f9ff;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 13px;
+    }
+
+    .footer {
+      margin-top: 48px;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Printable Header Action Bar -->
+  <div class="print-bar no-print">
+    <div>
+      <h3 style="color:#fff; margin:0 0 4px 0;">BuildSafe-AI · System Testing Document</h3>
+      <p style="color:#94a3b8; font-size:12px; margin:0;">Click print to save this document as a complete PDF guide</p>
+    </div>
+    <button class="print-btn" onclick="window.print()">
+      🖨️ Print / Save as PDF
+    </button>
+  </div>
+
+  <header>
+    <span class="badge badge-primary">IT3051 Fundamentals of Data Mining · 2026</span>
+    <h1>BuildSafe-AI · Complete System Testing Guide</h1>
+    <p class="subtitle">Official Testing Scenarios, Field Definitions, Model Threshold Verification & Viva Audit Notes</p>
+    <div style="font-size: 12px; color: #64748b; display: flex; gap: 20px;">
+      <span><strong>Model:</strong> Logistic Regression [tuned]</span>
+      <span><strong>Human Review Threshold:</strong> 65.0%</span>
+      <span><strong>Backend:</strong> FastAPI (:8000)</span>
+      <span><strong>Frontend:</strong> React 19 + Vite (:5173)</span>
+    </div>
+  </header>
+
+  <!-- SECTION 1 -->
+  <h2>1. How to Launch the System</h2>
+  <p>Make sure both the backend and frontend are running before performing the tests:</p>
+  <ul>
+    <li><strong>Option A (1-Click Windows):</strong> Double click <code>start_all.bat</code> in the project root folder.</li>
+    <li><strong>Option B (Python Launcher):</strong> Open PowerShell and run <code>python start_app.py</code>.</li>
+    <li><strong>Option C (Manual):</strong>
+      <ul>
+        <li>Terminal 1: <code>python backend/run.py</code> (Running at <code>http://127.0.0.1:8000</code>)</li>
+        <li>Terminal 2: <code>cd frontend && npm run dev</code> (Open browser at <code>http://localhost:5173</code>)</li>
+      </ul>
+    </li>
+  </ul>
+
+  <!-- SECTION 2 -->
+  <h2>2. Explanation of the 7 Form Input Fields</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:25%;">Input Field</th>
+        <th style="width:25%;">Allowed / Expected Values</th>
+        <th>How the System Preprocesses It (Notebook 02 Feature Engineering)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Violation Description</strong><br><code>description</code></td>
+        <td>Free-text description from DOB summons (e.g. "FAILURE TO MAINTAIN...")</td>
+        <td>
+          NLP Leakage Masking strips direct labels (<code>CLASS 1/2/3</code>, <code>IMMEDIATELY HAZARDOUS</code>), 
+          replaces URLs with <code>URL</code>, dates with <code>DATE</code>, and permit numbers with <code>IDNUM</code>. 
+          Tokenized into TF-IDF 1-2 n-grams (40,000 max features).
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Borough</strong><br><code>borough</code></td>
+        <td><code>1</code> (Manhattan), <code>2</code> (Bronx), <code>3</code> (Brooklyn), <code>4</code> (Queens), <code>5</code> (Staten Island)</td>
+        <td>Cast to string. One-hot encoded.</td>
+      </tr>
+      <tr>
+        <td><strong>Violation Type</strong><br><code>violation_type</code></td>
+        <td>12 NYC Categories (Construction, Boilers, Elevators, Cranes, Plumbing, Signs, Quality of Life, etc.)</td>
+        <td>One-hot encoded (rare levels merged into infrequent category).</td>
+      </tr>
+      <tr>
+        <td><strong>Respondent Name</strong><br><code>respondent</code></td>
+        <td>Entity or owner cited (e.g. "NYC HOUSING AUTHORITY", "ABC CORP LLC", "JOHN SMITH")</td>
+        <td>
+          Rule-based PII categorization into <code>GOVERNMENT</code>, <code>ORGANISATION</code>, or <code>INDIVIDUAL</code>.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Issue Date</strong><br><code>issue_date</code></td>
+        <td>Calendar date (YYYY-MM-DD)</td>
+        <td>
+          Decomposed into <code>ISSUE_MONTH</code>, <code>ISSUE_DAYOFWEEK</code> (0 to 6), and <code>IS_WEEKEND</code> (1 if Saturday/Sunday).
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Aggravation Level</strong><br><code>aggravation_level</code></td>
+        <td>No Aggravation (0), Aggravated Level 1 (1), Aggravated Level 2 (2)</td>
+        <td>Ordinal mapping to <code>0.0</code>, <code>1.0</code>, or <code>2.0</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Building ID (BIN)</strong><br><code>bin</code></td>
+        <td>7-digit NYC Building Identification Number (e.g. <code>1000007</code>, <code>2026562</code>)</td>
+        <td>
+          Looked up against <code>bin_history_lookup.csv</code> to compute:
+          1) <code>BIN_PRIOR_VIOLATIONS</code>, 2) <code>BIN_PRIOR_CLASS1</code>, and 3) <code>BIN_DAYS_SINCE_PREV</code> (capped at 1,000 days).
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 3: TEST CASES -->
+  <div class="page-break"></div>
+  <h2>3. Step-by-Step Test Scenarios (What to Enter)</h2>
+  <p>Use the following 4 exact test cases to verify the entire system behavior:</p>
+
+  <!-- CASE 1 -->
+  <div class="card card-c1">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h3>🔴 Test Case 1: Immediately Hazardous (Class 1)</h3>
+      <span class="badge badge-danger">Expected: CLASS - 1</span>
+    </div>
+    <p><strong>Scenario:</strong> Severe structural danger during unpermitted demolition; exterior wall stability compromised.</p>
+    
+    <div class="field-grid">
+      <div class="field-name">Violation Description:</div>
+      <div class="field-val">UNLAWFUL ACTS. FAILURE TO COMPLY WITH COMMISSIONER'S ORDER. FAILURE TO MAINTAIN BUILDING STABILITY DURING DEMOLITION WORK. CRACKING AND BULGING OBSERVED ON EXTERIOR BEARING WALL. CEASE USE AND PROVIDE IMMEDIATE SHORING.</div>
+
+      <div class="field-name">Borough:</div>
+      <div class="field-val">1 - Manhattan</div>
+
+      <div class="field-name">Violation Type:</div>
+      <div class="field-val">Construction</div>
+
+      <div class="field-name">Respondent Name:</div>
+      <div class="field-val">METROPOLITAN BUILDERS CORP</div>
+
+      <div class="field-name">Issue Date:</div>
+      <div class="field-val">2026-06-18</div>
+
+      <div class="field-name">Aggravation Level:</div>
+      <div class="field-val">Aggravated Offense Level 1</div>
+
+      <div class="field-name">Building ID (BIN):</div>
+      <div class="field-val">1000007 (Click "Check History" -> 10 priors, 7 Class 1s)</div>
+    </div>
+
+    <div class="highlight-box">
+      <strong>Expected System Result:</strong>
+      <ul>
+        <li><strong>Predicted Class:</strong> <code>CLASS - 1: Immediately hazardous</code></li>
+        <li><strong>Confidence:</strong> ~99.9%</li>
+        <li><strong>Human Inspector Flag:</strong> <code>False</code> (Automated Dispatch Approved ✅)</li>
+        <li><strong>Driver:</strong> Keywords like <em>CRACKING</em>, <em>BEARING WALL</em>, <em>CEASE USE</em>, combined with prior building Class 1 history.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CASE 2 -->
+  <div class="card card-c2">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h3>🔵 Test Case 2: Major Violation (Class 2)</h3>
+      <span class="badge badge-primary">Expected: CLASS - 2</span>
+    </div>
+    <p><strong>Scenario:</strong> Residential unit illegally converted to a commercial spa without DOB approval.</p>
+    
+    <div class="field-grid">
+      <div class="field-name">Violation Description:</div>
+      <div class="field-val">WORK WITHOUT A PERMIT. NOTED RESIDENTIAL 2ND FLOOR APARTMENT CONVERTED INTO COMMERCIAL SPA BUSINESS MABEL SPA LLC WITH NEW PARTITIONS AND PLUMBING FIXTURES WITHOUT VALID DOB APPROVAL.</div>
+
+      <div class="field-name">Borough:</div>
+      <div class="field-val">2 - Bronx</div>
+
+      <div class="field-name">Violation Type:</div>
+      <div class="field-val">Construction</div>
+
+      <div class="field-name">Respondent Name:</div>
+      <div class="field-val">ZAPATA NEPTALI</div>
+
+      <div class="field-name">Issue Date:</div>
+      <div class="field-val">2026-06-01</div>
+
+      <div class="field-name">Aggravation Level:</div>
+      <div class="field-val">No Aggravation (Standard)</div>
+
+      <div class="field-name">Building ID (BIN):</div>
+      <div class="field-val">2026562</div>
+    </div>
+
+    <div class="highlight-box">
+      <strong>Expected System Result:</strong>
+      <ul>
+        <li><strong>Predicted Class:</strong> <code>CLASS - 2: Major</code></li>
+        <li><strong>Confidence:</strong> ~82.0% - 90.0%</li>
+        <li><strong>Human Inspector Flag:</strong> <code>False</code> (Automated Dispatch Approved ✅)</li>
+        <li><strong>Driver:</strong> <em>WORK WITHOUT A PERMIT</em>, residential occupancy alteration without severe collapse risk.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CASE 3 -->
+  <div class="card card-c3">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h3>🟡 Test Case 3: Lesser Violation (Class 3)</h3>
+      <span class="badge badge-warning">Expected: CLASS - 3</span>
+    </div>
+    <p><strong>Scenario:</strong> Commercial illuminated roof sign exceeding square footage without registration on file.</p>
+    
+    <div class="field-grid">
+      <div class="field-name">Violation Description:</div>
+      <div class="field-val">OUTDOOR ADVERTISING SIGN DISPLAYED WITHOUT VALID CERTIFICATE OF REGISTRATION. MAINTAINING ILLUMINATED SIGN EXCEEDING ALLOWABLE SQUARE FOOTAGE ON ROOF. FILE CERTIFICATE AND ALL PERMITS WITH COMMISSIONER.</div>
+
+      <div class="field-name">Borough:</div>
+      <div class="field-val">4 - Queens</div>
+
+      <div class="field-name">Violation Type:</div>
+      <div class="field-val">Signs</div>
+
+      <div class="field-name">Respondent Name:</div>
+      <div class="field-val">CLEAR CHANNEL OUTDOOR INC</div>
+
+      <div class="field-name">Issue Date:</div>
+      <div class="field-val">2026-05-20</div>
+
+      <div class="field-name">Aggravation Level:</div>
+      <div class="field-val">No Aggravation (Standard)</div>
+
+      <div class="field-name">Building ID (BIN):</div>
+      <div class="field-val">4001234</div>
+    </div>
+
+    <div class="highlight-box">
+      <strong>Expected System Result:</strong>
+      <ul>
+        <li><strong>Predicted Class:</strong> <code>CLASS - 3: Lesser</code></li>
+        <li><strong>Confidence:</strong> ~74.0% - 85.0%</li>
+        <li><strong>Human Inspector Flag:</strong> <code>False</code> (Automated Dispatch Approved ✅)</li>
+        <li><strong>Driver:</strong> Category <em>Signs</em>, administrative phrasing <em>FILE CERTIFICATE</em> and <em>REGISTRATION</em>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CASE 4 -->
+  <div class="card card-flag page-break">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h3>⚠️ Test Case 4: Ambiguous Borderline Case (Human Inspector Flag)</h3>
+      <span class="badge badge-warning">Mandatory Human Review</span>
+    </div>
+    <p><strong>Scenario:</strong> Conflicting wording describing repair of an exterior crack; model uncertainty drops below 65.0%.</p>
+    
+    <div class="field-grid">
+      <div class="field-name">Violation Description:</div>
+      <div class="field-val">FAILURE TO MAINTAIN EXTERIOR BUILDING WALL REPAIR CRACK</div>
+
+      <div class="field-name">Borough:</div>
+      <div class="field-val">1 - Manhattan</div>
+
+      <div class="field-name">Violation Type:</div>
+      <div class="field-val">Construction</div>
+
+      <div class="field-name">Respondent Name:</div>
+      <div class="field-val">NYC HOUSING AUTHORITY</div>
+
+      <div class="field-name">Issue Date:</div>
+      <div class="field-val">2026-06-15</div>
+
+      <div class="field-name">Aggravation Level:</div>
+      <div class="field-val">No Aggravation (Standard)</div>
+
+      <div class="field-name">Building ID (BIN):</div>
+      <div class="field-val">1000007</div>
+    </div>
+
+    <div class="highlight-box" style="border-color:#f59e0b; background:#fffbeb;">
+      <strong>Expected System Result:</strong>
+      <ul>
+        <li><strong>Predicted Class:</strong> <code>CLASS - 2: Major</code></li>
+        <li><strong>Confidence Score:</strong> <strong>54.2%</strong> (&lt; 65.0% Safety Threshold)</li>
+        <li><strong>Probabilities:</strong> Class 1: 44.2% | Class 2: 54.2% | Class 3: 1.6%</li>
+        <li><strong>Human Review Required:</strong> <strong>TRUE</strong></li>
+        <li><strong>UI Alert Banner:</strong>
+          <div style="background:#fef3c7; border:1px solid #f59e0b; padding:8px 12px; border-radius:6px; margin-top:8px; font-weight:bold; color:#92400e;">
+            ⚠️ SEND TO HUMAN INSPECTOR — QUALITY ASSURANCE REVIEW REQUIRED<br>
+            <span style="font-size:11px; font-weight:normal;">Confidence score (54.2%) is below the quality assurance threshold of 65.0%. High ambiguity detected between classes. Mandatory on-site review required.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 4: INTERACTIVE FEATURES -->
+  <h2>4. Interactive Features to Demonstrate to the Examiner</h2>
+  <ol>
+    <li>
+      <strong>Quick Scenario Presets:</strong>
+      Click any of the 4 preset cards at the top of the form ("Severe Structural Hazard", "Illegal Occupancy", "Expired Signage", "Borderline Triage"). The entire form autofills with 1-click.
+    </li>
+    <li>
+      <strong>Live Respondent Categorization:</strong>
+      Type <code>NYC HOUSING AUTHORITY</code> in the Respondent input — notice the real-time badge updates immediately to <code>Derived: GOVERNMENT</code>. Type <code>ABC CORP LLC</code> — updates to <code>Derived: ORGANISATION</code>.
+    </li>
+    <li>
+      <strong>Building History Live Lookup:</strong>
+      Enter <code>1000007</code> in the Building ID (BIN) box and click <strong>"Check History"</strong>. The backend queries <code>bin_history_lookup.csv</code> and instantly renders:
+      <code>Total Priors: 10 | Class 1 Priors: 7 | Last: 2026-09-02</code>.
+    </li>
+    <li>
+      <strong>Light &amp; Dark Theme Switcher:</strong>
+      Click the <strong>Theme Toggle</strong> button in the top-right header or bottom of the sidebar to toggle between sleek Dark Mode and high-contrast Light Mode.
+    </li>
+    <li>
+      <strong>Feature Engineering Inspection:</strong>
+      After submitting a prediction, expand the <strong>"Inspect Engineered Model Inputs (14 Features)"</strong> drawer. It shows the exact feature vector passed into the pipeline (demonstrates complete data flow integrity for the marking rubric).
+    </li>
+    <li>
+      <strong>Batch CSV Triage:</strong>
+      Click <strong>"Batch Triage"</strong> in the top header. Click <strong>"Load Demo 5-Case Batch"</strong> to process multiple records simultaneously, filter by <em>"⚠️ Human Review"</em>, and click <strong>"Export Triage Report (CSV)"</strong>.
+    </li>
+    <li>
+      <strong>Model Audit Tab:</strong>
+      Click <strong>"Model Audit"</strong> in the top header to inspect the 5 candidate models benchmark table from Stage 7, proving why Logistic Regression [tuned] was selected.
+    </li>
+  </ol>
+
+  <!-- SECTION 5: VIVA AUDIT DEFENSE -->
+  <h2>5. Viva Defense Notes (Why the Model Behaves This Way)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:30%;">Examiner Question</th>
+        <th>Prepared Technical Answer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Why Logistic Regression over LightGBM / XGBoost?</strong></td>
+        <td>
+          In Stage 7, 4 of 5 models passed the recall floors (Class-1 $\ge 0.80$, Class-3 $\ge 0.55$). 
+          Logistic Regression achieved tied Macro-F1 ($0.7719$ vs $0.7748$ for LightGBM), but Logistic Regression had 
+          better Class-3 recall ($73.0\%$ vs $65.0\%$), produced smooth well-calibrated probabilities, and evaluated in $0$ ms.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Why was Linear SVM disqualified?</strong></td>
+        <td>
+          Linear SVM achieved high Macro-F1 ($0.7768$), but Linear SVM only outputs signed decision margins, not calibrated class probabilities. 
+          Without probabilities, a safety threshold (confidence &lt; 65% $\rightarrow$ inspector) cannot be computed.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>How did you prevent data leakage?</strong></td>
+        <td>
+          1) Masked direct target vocabulary (<code>CLASS 1/2/3</code>) from text before TF-IDF.<br>
+          2) Refitted TF-IDF vocabulary and Chi² feature selector inside each CV fold.<br>
+          3) Building history counts strictly violations issued on <em>earlier dates</em>.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    <p>© 2026 BuildSafe-AI · NYC Department of Buildings / ECB Violation Severity Triage Solution · IT3051</p>
+  </div>
+
+</body>
+</html>
